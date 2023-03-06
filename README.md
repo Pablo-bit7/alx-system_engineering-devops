@@ -1,1 +1,2 @@
-0-hello_world.sh returns 'Hello,World'.
+0-hello_world - 'Hello,World'
+0-current_working_directory - Prints the absolute path name of the current working directory
