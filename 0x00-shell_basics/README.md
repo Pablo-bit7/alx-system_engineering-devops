@@ -11,4 +11,5 @@
 10-back - Changes the working directory to the previous one.   
 11-lists - Script lists all files (even hidden) in the current directory and the parent of the working directory and the /boot directory, in long format.   
 12-file_type - Prints the type of the file named iamafile.   
+13-symbolic_link - Creates a symbolic link to /bin/ls, named __ls__.   
 
