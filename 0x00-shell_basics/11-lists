@@ -1,2 +1,2 @@
 #!/bin/bash
-./run.sh
+ls -aln; ls -aln ..; ls -aln /boot
