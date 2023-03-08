@@ -1,2 +1,2 @@
 #!/bin/bash
-chmod o+rwx hello && chmod u-rwx,g-rwx hello
+find . -type d -exec chmod a+x {} \;
