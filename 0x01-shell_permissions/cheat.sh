@@ -1,2 +1,2 @@
 #!/bin/bash
-find . -type d -exec chmod a+x {} \;
+mkdir my_dir && chmod 751 my_dir
