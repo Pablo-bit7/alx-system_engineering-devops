@@ -1,2 +1,2 @@
 #!/bin/bash
-ls -aln\n ls -aln ..\n ls -aln /boot
+ls -aln && ls -aln .. ls -aln /boot
