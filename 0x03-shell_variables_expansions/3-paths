@@ -1,0 +1,2 @@
+#!/bin/bash
+echo "Number of directories in PATH: $(IFS=':'; echo $PATH | tr ':' '\n' | wc -l)"
