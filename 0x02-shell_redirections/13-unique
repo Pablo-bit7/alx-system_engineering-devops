@@ -1,2 +1,2 @@
 #!/bin/bash
-./cheat.sh
+sort | uniq -c | grep -E '^ +1 ' | cut -d ' ' -f 3-
