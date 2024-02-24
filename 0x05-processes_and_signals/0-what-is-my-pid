@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# This script displays its own PID
+
+echo $$  # $$ is a special variable representing the PID of the script
+
