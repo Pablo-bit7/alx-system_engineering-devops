@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# Do not stop the 4-to_infinity_and_beyond process
+
+process_id=$(pgrep -f "4-to_infinity_and_beyond")
+if [ -n "$process_id" ]; then
+    kill "$process_id"
+else
+    echo "4-to_infinity_and_beyond process not found."
+fi
+
