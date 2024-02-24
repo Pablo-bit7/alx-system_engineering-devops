@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# Kill the 7-highlander process
+
+process_name="7-highlander"
+
+process_id=$(pgrep "$process_name")
+if [ -n "$process_id" ]; then
+    kill "$process_id"
+else
+    echo "$process_name process not found."
+fi
+
