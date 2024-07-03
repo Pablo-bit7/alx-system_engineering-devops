@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# This script installs Nginx on an Ubuntu server and configures it to return "Hello World!" at its root
+
+# Update package list and install Nginx
+apt-get update -y
+apt-get install -y nginx
+
+# Create a simple HTML file that Nginx will serve
+echo 'Hello World!' > /var/www/html/index.html
+
+# Start Nginx if not already running
+service nginx start
+
+# Restart Nginx to ensure all changes are applied
+service nginx restart
