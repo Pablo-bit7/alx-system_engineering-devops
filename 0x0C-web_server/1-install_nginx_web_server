@@ -1,8 +1,12 @@
 #!/usr/bin/env bash
 # This script installs Nginx on an Ubuntu server and configures it to return "Hello World!" at its root
 
-# Update package list and install Nginx
-apt-get update -y
+# Check if the script is being run as root; if not, re-execute it with sudo
+if [ "$(id -u)" -ne 0 ]; then
+    exec sudo bash "$0" "$@"
+fi
+
+# Install Nginx
 apt-get install -y nginx
 
 # Create a simple HTML file that Nginx will serve
