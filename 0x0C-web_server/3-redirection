@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+# This script installs Nginx on an Ubuntu server and configures it to return "Hello World!" at its root
+# and to redirect /redirect_me to another page with a 301 Moved Permanently status
+
+# Check if the script is being run as root; if not, re-execute it with sudo
+if [ "$(id -u)" -ne 0 ]; then
+    echo "The script is not running as root. Re-executing with sudo..."
+    exec sudo bash "$0" "$@"
+fi
+
+# Install Nginx
+apt-get install -y nginx
+
+# Create a simple HTML file that Nginx will serve
+echo 'Hello World!' > /var/www/html/index.html
+
+# Configure Nginx to redirect /redirect_me
+NGINX_CONF="/etc/nginx/sites-available/default"
+REDIRECT_URL="https://www.youtube.com/watch?v=QH2-TGUlwu4"
+
+sed -i '/server_name _;/a \\n\tlocation /redirect_me {\n\t\treturn 301 '"$REDIRECT_URL"';\n\t}' $NGINX_CONF
+
+# Start Nginx if not already running
+service nginx start
+
+# Restart Nginx to ensure all changes are applied
+service nginx restart
