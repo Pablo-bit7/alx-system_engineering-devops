@@ -16,9 +16,22 @@ echo 'Hello World!' > /var/www/html/index.html
 
 # Configure Nginx to redirect /redirect_me
 NGINX_CONF="/etc/nginx/sites-available/default"
-REDIRECT_URL="https://www.youtube.com/watch?v=QH2-TGUlwu4"
 
-sed -i '/server_name _;/a \\n\tlocation /redirect_me {\n\t\treturn 301 '"$REDIRECT_URL"';\n\t}' $NGINX_CONF
+# Backup the default configuration file
+cp $NGINX_CONF $NGINX_CONF.bak
+
+# Configure Nginx to redirect /redirect_me
+printf %s "server {
+    listen 80;
+    listen [::]:80 default_server;
+
+    root /var/www/html;
+    index index.html index.htm index.nginx-debian.html;
+
+    location /redirect_me {
+        return 301 https://www.youtube.com/watch?v=dQw4w9WgXcQ;
+    }
+}" > /etc/nginx/sites-enabled/default
 
 # Start Nginx if not already running
 service nginx start
