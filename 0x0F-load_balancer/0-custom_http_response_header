@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+# This script installs and configures Nginx with a custom HTTP response header
+
+# Check if the script is running as root
+if [ "$(id -u)" -ne 0 ]; then
+    echo "The script is not running as root. Re-executing with sudo..."
+    exec sudo bash "$0" "$@"
+fi
+
+# Update package list and install Nginx
+apt-get update -y
+apt-get install -y nginx
+
+# Create a simple HTML file that Nginx will serve
+echo 'Hello World!' > /var/www/html/index.html
+
+# Create the custom 404 page
+echo "Ceci n'est pas une page" > /var/www/html/custom_404.html
+
+# Configure Nginx
+NGINX_CONF="/etc/nginx/sites-available/default"
+
+# Backup the default configuration file
+cp $NGINX_CONF $NGINX_CONF.bak
+
+# Get the hostname of the server
+HOSTNAME=$(hostname)
+
+# Write the new configuration to the Nginx default site configuration file
+printf %s "server {
+    listen 80;
+    listen [::]:80 default_server;
+
+    root /var/www/html;
+    index index.html index.htm index.nginx-debian.html;
+
+    location /redirect_me {
+        return 301 https://www.youtube.com/watch?v=dQw4w9WgXcQ;
+    }
+
+    error_page 404 /custom_404.html;
+    location = /custom_404.html {
+        internal;
+    }
+
+    add_header X-Served-By $HOSTNAME;
+}" > $NGINX_CONF
+
+# Restart Nginx to apply changes
+service nginx restart
