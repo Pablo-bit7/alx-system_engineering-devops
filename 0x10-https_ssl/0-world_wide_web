@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+# This script audits subdomains of a given domain and displays their DNS record type and destination.
+
+# Function to fetch and display subdomain information
+fetch_subdomain_info() {
+    local domain="$1"
+    local subdomain="$2"
+    local record
+    local destination
+
+    record=$(dig +short "$subdomain.$domain" | tail -n 1)
+    if [[ -n "$record" ]]; then
+        destination=$(dig +short "$subdomain.$domain" | awk 'NR==1')
+        echo "The subdomain $subdomain is a A record and points to $destination"
+    else
+        echo "No A record found for $subdomain.$domain"
+    fi
+}
+
+# Main script logic
+main() {
+    local domain="$1"
+    local subdomain="$2"
+    local subdomains=("www" "lb-01" "web-01" "web-02")
+
+    if [[ -n "$subdomain" ]]; then
+        fetch_subdomain_info "$domain" "$subdomain"
+    else
+        for sub in "${subdomains[@]}"; do
+            fetch_subdomain_info "$domain" "$sub"
+        done
+    fi
+}
+
+# Ensure the script accepts at least one argument
+if [[ $# -lt 1 ]]; then
+    echo "Usage: $0 <domain> [subdomain]"
+    exit 1
+fi
+
+# Call the main function with arguments
+main "$@"
