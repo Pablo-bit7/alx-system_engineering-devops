@@ -30,6 +30,7 @@ HOSTNAME=$(hostname)
 printf %s "server {
     listen 80;
     listen [::]:80 default_server;
+    add_header X-Served-By $HOSTNAME;
 
     root /var/www/html;
     index index.html index.htm index.nginx-debian.html;
@@ -43,7 +44,6 @@ printf %s "server {
         internal;
     }
 
-    add_header X-Served-By $HOSTNAME;
 }" > $NGINX_CONF
 
 # Restart Nginx to apply changes
