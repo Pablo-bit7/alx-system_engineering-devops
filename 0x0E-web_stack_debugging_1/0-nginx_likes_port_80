@@ -7,10 +7,16 @@ apt-get install -y nginx
 
 # Ensure Nginx configuration is set to listen on port 80
 NGINX_CONF="/etc/nginx/sites-available/default"
+NGINX_LINK="/etc/nginx/sites-enabled/default"
 
 # Use sed to update the configuration file if needed
 sed -i 's/listen 80 default_server;/listen 80;/' $NGINX_CONF
 sed -i 's/listen \[::\]:80 default_server;/listen [::]:80;/' $NGINX_CONF
+
+# Ensure the symbolic link exists and points to the correct configuration file
+if [ ! -L $NGINX_LINK ]; then
+    ln -s $NGINX_CONF $NGINX_LINK
+fi
 
 # Restart Nginx to apply the changes
 systemctl restart nginx
