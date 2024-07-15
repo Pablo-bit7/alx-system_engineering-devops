@@ -6,11 +6,12 @@ apt-get update
 apt-get install -y nginx
 
 # Remove default Nginx configuration file
-rm /etc/nginx/sites-enabled/default
+rm -f /etc/nginx/sites-enabled/default
 
 NGINX_CONF="/etc/nginx/sites-available/default"
 NGINX_LINK="/etc/nginx/sites-enabled/default"
 
+# Create new symbolic link for Nginx configuration file
 ln -s $NGINX_CONF $NGINX_LINK
 
 # Restart Nginx to apply the changes
