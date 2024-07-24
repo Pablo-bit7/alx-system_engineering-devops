@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 # This script runs the `whoami` command as the user specified by the argument
 # Run the `whoami` command as the specified user
-su -c whoami "$1"
+sudo -u "$1" whoami
