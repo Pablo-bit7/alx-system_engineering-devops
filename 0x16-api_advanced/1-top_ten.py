@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """
-Module to query the Reddit API and print the top 10 hot post titles for a subreddit.
+Module to query the Reddit API and print the top 10 hot
+post titles for a subreddit.
 """
 
 import requests
@@ -22,7 +23,9 @@ def top_ten(subreddit):
     params = {'limit': 10}
 
     try:
-        response = requests.get(url, headers=headers, params=params, allow_redirects=False)
+        response = requests.get(
+            url, headers=headers, params=params, allow_redirects=False
+        )
         if response.status_code == 200:
             data = response.json()
             posts = data.get('data', {}).get('children', [])
